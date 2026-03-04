@@ -1,130 +1,138 @@
-[README.md](https://github.com/user-attachments/files/25748040/README.md)
-# 🎙️ Agente de Voz · Groq + LLaMA
 
-Agente conversacional con entrada por **voz y texto**, respuesta por **audio y texto**, powered by **Groq API** con **LLaMA 3.3 70B** y transcripción con **Whisper**.
+[README.md](https://github.com/user-attachments/files/25748544/README.md)
+# 🎙️ Agente de Voz · Groq + LLaMA + edge-tts
+
+Asistente de voz en español construido con Streamlit, la API de Groq (LLaMA 3.3) y síntesis de voz neural mediante edge-tts.
 
 ---
 
 ## ✨ Características
 
-- 🎙️ **Entrada por voz** — graba desde el micrófono, transcribe con Groq Whisper
-- ⌨️ **Entrada por texto** — escribe tu pregunta directamente
-- 🔊 **Respuesta por audio** — síntesis de voz con gTTS (autoplay)
-- 💬 **Respuesta por texto** — historial de conversación completo con contexto
-- 🤖 **LLaMA 3.3 70B** — vía Groq (ultra rápido, gratis)
-- ⚙️ **Configurable** — modelo, velocidad de voz, prompt del sistema
+- **Entrada por voz** — graba tu pregunta con el micrófono del navegador
+- **Entrada por texto** — escribe directamente con soporte de Enter para enviar
+- **Respuesta en audio** — síntesis de voz neural con 7 voces en español (México, España, Argentina, Perú, Colombia)
+- **Streaming del LLM** — las respuestas se generan token a token para menor latencia
+- **Historial de conversación** — contexto completo enviado en cada petición
+- **Sin recargas de página** — comunicación directa con `Streamlit.setComponentValue`
 
 ---
 
-## 🚀 Deploy en Streamlit Cloud
+## 🚀 Instalación
 
-### 1. Fork / sube a GitHub
-
-```
-agente-voz/
-├── app.py
-├── requirements.txt
-└── README.md
-```
-
-### 2. Ve a [share.streamlit.io](https://share.streamlit.io)
-
-- Conecta tu cuenta de GitHub
-- Selecciona el repositorio
-- Archivo principal: `app.py`
-- Clic en **Deploy**
-
-### 3. Configura el secreto (opcional pero recomendado)
-
-En Streamlit Cloud → Settings → Secrets:
-
-```toml
-GROQ_API_KEY = "gsk_xxxxxxxxxxxxxxxxxxxx"
-```
-
-Si configuras el secreto, puedes pre-cargar la key en `app.py` agregando al inicio:
-
-```python
-import os
-api_key = st.sidebar.text_input(...) or os.environ.get("GROQ_API_KEY", "")
-```
-
----
-
-## 💻 Ejecución local
-
-### Requisitos
-
-- Python 3.9+
-- Cuenta en [console.groq.com](https://console.groq.com) (gratis)
-
-### Instalación
+### 1. Clonar / descargar el proyecto
 
 ```bash
-# Clona el repositorio
-git clone https://github.com/tu-usuario/agente-voz.git
+git clone <tu-repo>
 cd agente-voz
+```
 
-# Crea entorno virtual
-python -m venv venv
-source venv/bin/activate        # Linux/Mac
-venv\Scripts\activate           # Windows
+### 2. Crear entorno virtual (recomendado)
 
-# Instala dependencias
+```bash
+python -m venv .venv
+source .venv/bin/activate        # Linux / macOS
+.venv\Scripts\activate           # Windows
+```
+
+### 3. Instalar dependencias
+
+```bash
 pip install -r requirements.txt
+```
 
-# Ejecuta
+### 4. Ejecutar
+
+```bash
 streamlit run app.py
 ```
 
-Abre tu navegador en `http://localhost:8501`
+La app abrirá en `http://localhost:8501`.
 
 ---
 
-## 🔑 Obtener Groq API Key
+## 🔑 Configuración
 
-1. Ve a [console.groq.com](https://console.groq.com)
-2. Crea una cuenta gratuita
-3. Ve a **API Keys** → **Create API Key**
-4. Copia la key (empieza con `gsk_`)
-5. Pégala en el panel lateral de la app
-
----
-
-## 📦 Stack técnico
-
-| Componente | Tecnología |
-|---|---|
-| Frontend | Streamlit |
-| LLM | LLaMA 3.3 70B via Groq |
-| Transcripción voz → texto | Groq Whisper Large v3 |
-| Síntesis texto → voz | gTTS (Google Text-to-Speech) |
-| Grabación en browser | audio-recorder-streamlit |
-
----
-
-## 🎛️ Modelos disponibles
-
-| Modelo | Velocidad | Calidad |
+| Parámetro | Dónde | Descripción |
 |---|---|---|
-| `llama-3.3-70b-versatile` | ⚡⚡⚡ | ⭐⭐⭐⭐⭐ |
-| `llama-3.1-8b-instant` | ⚡⚡⚡⚡⚡ | ⭐⭐⭐ |
-| `llama3-70b-8192` | ⚡⚡⚡ | ⭐⭐⭐⭐ |
-| `llama3-8b-8192` | ⚡⚡⚡⚡⚡ | ⭐⭐⭐ |
+| **Groq API Key** | Sidebar | Obtén la tuya gratis en [console.groq.com](https://console.groq.com) |
+| **Modelo** | Sidebar | `llama-3.3-70b-versatile` (más capaz) o `llama-3.1-8b-instant` (más rápido) |
+| **Voz** | Sidebar | 7 voces neurales en español |
+| **Velocidad** | Sidebar | De −20% a +20% |
+| **Audio activado** | Sidebar | Toggle para activar/desactivar TTS |
+| **Comportamiento** | Sidebar | System prompt personalizable |
 
 ---
 
-## 📁 Estructura del proyecto
+## 📁 Estructura
 
 ```
-agente-voz/
-├── app.py              # Aplicación Streamlit principal
+.
+├── app.py              # Aplicación principal
 ├── requirements.txt    # Dependencias Python
 └── README.md           # Este archivo
 ```
 
 ---
 
-## 📝 Licencia
+## 📦 Dependencias
 
-MIT — libre de usar, modificar y distribuir.
+```
+streamlit>=1.32.0    # Framework web
+groq>=0.9.0          # Cliente Groq (LLM + Whisper STT)
+edge-tts>=6.1.9      # Síntesis de voz neural (Microsoft Edge TTS)
+```
+
+---
+
+## 🏗️ Arquitectura
+
+```
+Navegador (iframe)
+  │
+  ├─ Graba audio  ──► MediaRecorder API ──► base64
+  │
+  └─ Streamlit.setComponentValue({type, payload})
+                          │
+                    st.session_state.pending
+                          │
+                    st.rerun()
+                          │
+              ┌─────────────────────┐
+              │      app.py         │
+              │  STT (Whisper)      │  ← solo si type == "voice"
+              │  LLM streaming      │  ← Groq completions
+              │  TTS (edge-tts)     │  ← solo si audio activado
+              └─────────────────────┘
+                          │
+                   response_text + response_audio (base64 mp3)
+                          │
+                   inyectado en el HTML del componente
+```
+
+**¿Por qué no `window.parent.location.href`?**
+La versión anterior recargaba la página completa en cada mensaje, lo que causaba demoras de 2–4 segundos antes de siquiera empezar a procesar. Ahora se usa `Streamlit.setComponentValue` para comunicar el mensaje al backend sin ningún reload, y `st.rerun()` solo se dispara cuando hay un mensaje pendiente real.
+
+---
+
+## 🔒 Seguridad
+
+- La API Key **nunca se guarda en disco** — vive solo en `st.session_state`
+- El audio grabado se procesa en memoria y se borra del disco inmediatamente tras la transcripción
+- No hay persistencia entre sesiones
+
+---
+
+## 🐛 Solución de problemas
+
+| Problema | Solución |
+|---|---|
+| *"Sin acceso al micrófono"* | Permite el acceso al micrófono en el navegador (icono 🔒 en la barra de dirección) |
+| *"Error en transcripción"* | Verifica que la API Key sea válida y tenga cuota disponible |
+| *El audio no suena* | Algunos navegadores bloquean el autoplay; interactúa con la página primero |
+| *Respuestas lentas* | Usa `llama-3.1-8b-instant` en lugar del modelo 70B |
+
+---
+
+## 📄 Licencia
+
+MIT — úsalo libremente.
